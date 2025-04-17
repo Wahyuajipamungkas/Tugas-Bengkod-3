@@ -1,56 +1,41 @@
 @extends('layouts.app')
-
-
 {{-- Customize layout sections --}}
-
-
-@section('subtitle', 'Welcome')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Periksa')
-
+@section('subtitle', 'Dokter')
+@section('content_header_title', 'Periksa')
 @section('content_body')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Periksa</div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">id</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Last</th>
-                                    <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    </tr>
-                                </tbody>
-                                </table>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <a href="{{ route('periksa.create') }}" class="btn btn-primary">Tambah Periksa</a>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama Obat</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @foreach ($obat as $obat)
+                        <tr>
+                            <td>{{ $obat->id }}</td>
+                            <td>{{ $obat->nama }}</td>
+                            <td>
+                                <a href="{{ route('obat.edit', $obat->id) }}" class="btn btn-warning">Edit</a>
+                                <form action="{{ route('obat.destroy', $obat->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+
+            </table>
         </div>
     </div>
-</div>
 @endsection
+ 
